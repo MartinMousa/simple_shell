@@ -5,6 +5,7 @@
  * @info: info addr
  * @av: arguments vector
  */
+
 void set_info(info_t *info, char **av)
 {
 	int i = 0;
@@ -22,12 +23,12 @@ void set_info(info_t *info, char **av)
 				info->argv[1] = NULL;
 			}
 		}
-		/* num count argu */
+		/* count */
 		for (i = 0; info->argv && info->argv[i]; i++)
 			;
 		info->argc = i;
 
-		/* rep alis and vars */
+		/* Dont forget the chains */
 		replace_alias(info);
 		replace_vars(info);
 	}
@@ -37,6 +38,7 @@ void set_info(info_t *info, char **av)
  * clear_info - clears info struct fields
  * @info: addr of info
  */
+
 void clear_info(info_t *info)
 {
 	info->arg = NULL;
@@ -50,6 +52,7 @@ void clear_info(info_t *info)
  * @info: struct address
  * @flush: 1 if freeing all fields, otherwise will not
  */
+
 void free_info(info_t *info, int flush)
 {
 	ffree(info->argv);
@@ -66,11 +69,10 @@ void free_info(info_t *info, int flush)
 		if (info->alias)
 			free_list(&(info->alias));
 		ffree(info->environ);
-		info->environ = NULL;
+			info->environ = NULL;
 		bfree((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);
 		_putchar(BUF_FLUSH);
 	}
 }
- /*done*/
